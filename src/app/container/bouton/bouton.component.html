@@ -1,0 +1,157 @@
+<div  mwlResizable
+      [enableGhostResize]="true"
+      [resizeEdges]="{right: true, left: true}"
+      (resizeEnd)="onResizeEnd($event)" 
+ class="boutonClass" 
+[ngStyle]="{
+    'top.px':(this.boutonObject.y)-((this.boutonObject.y)%60),
+    'left.px':(this.boutonObject.x-(this.boutonObject.x%90)),
+    'width.px':width-(this.boutonObject.mleft+this.boutonObject.mright),
+'height.px':height-(this.boutonObject.mtop+this.boutonObject.mbottom),
+    'position':'absolute',
+   'margin-top.px':this.boutonObject.mtop,
+'margin-right.px':this.boutonObject.mright,
+'margin-bottom.px':this.boutonObject.mbottom,
+'margin-left.px':this.boutonObject.mleft}"
+    (click)="clicked($event)" (dblclick)="open()" 
+    (clickOutside)="onClickedOutside($event)">
+
+   <div class="sizeleft {{sizeDiv}}"></div>
+   <div class="sizeright {{sizeDiv}}"></div>
+   <div class="bou"></div>
+ <button type="button" class="btn btn-primary" [ngStyle]="{
+   'height':'100%','display': 'block',
+    'margin-left':'auto',
+    'margin-right': 'auto',
+   'text-decoration':u,'font-weight':b,'font-style':i,
+   'font-size':t,
+  'background-color':this.boutonObject.color}">
+ {{finaltxt}}
+</button>
+</div>
+<modal #modal>
+    <modal-body>
+    <div class="form-group row">
+        <div class="col-xs-4">
+            <label><strong>Texte du bouton </strong></label>
+        </div>
+  <div class="col-xs-8">
+    <input class="form-control" type="text" placeholder="Texte du bouton" [(ngModel)]="txt">
+  </div>
+</div>
+   <div class="form-group row">
+        <div class="col-xs-4">
+            <label><strong>Taille du texte</strong></label>
+        </div>
+  <div class="col-xs-8">
+    <select class="form-control" (change)="changeT()" [(ngModel)]="taille">
+        <option>Petit</option>
+        <option>Moyen</option>
+        <option>Grand</option>
+    </select>
+  </div>
+</div>
+   <div class="form-group row">
+        <div class="col-xs-4">
+    <label class="checkbox-inline">
+      <input type="checkbox" (click)="boldCheck()" [(ngModel)]="bold">Texte en gras
+    </label></div>
+    <div class="col-xs-4">
+    <label class="checkbox-inline">
+      <input type="checkbox" (click)="italicCheck()" [(ngModel)]="italic">Texte en italique
+    </label></div>
+     <div class="col-xs-4">
+    <label class="checkbox-inline">
+      <input type="checkbox" (click)="uderCheck()" [(ngModel)]="underline">Texte souligné
+    </label>
+     </div>
+  </div>
+    <hr>
+    <div class="form-group row">
+        <div class="col-xs-4">
+            <label><strong>Lien vers </strong></label>
+        </div>
+  <div class="col-xs-8">
+     <select class="form-control" (change)="selectChange()" [(ngModel)]="ref">
+        <option>Page web d'un autre site</option>
+        <option>Page web du site</option>
+        <option>Fichier</option>
+    </select>
+  </div>
+</div>
+<div *ngIf="other">
+ <div class="form-group row">
+        <div class="col-xs-4">
+            <label><strong>URL du site</strong></label>
+        </div>
+  <div class="col-xs-8">
+    <input class="form-control" type="text" placeholder="URL du site" [(ngModel)]="site">
+  </div>
+</div>
+  <div class="form-group row">
+     <div class="col-xs-4">
+            <label><strong>Au clic, la page s'ouvre</strong></label>
+        </div>
+    <div class="col-xs-4">
+    <label class="radio-inline">
+      <input type="radio" (click)="checkPageC()" [checked]="pageCourante">dans la page courante
+    </label></div>
+     <div class="col-xs-4">
+    <label class="radio-inline">
+      <input type="radio" (click)="checkPageN()" [checked]="pageNew">dans un nouvel onglet
+    </label>
+     </div>
+  </div>
+</div>
+<div *ngIf="own">
+ <div class="form-group row">
+        <div class="col-xs-4">
+            <label><strong>Page du site</strong></label>
+        </div>
+  <div class="col-xs-8">
+   <select class="form-control" [(ngModel)]="psite">
+        <option>Choisissez</option>
+        <option>Offres</option>
+        <option>Actualités et CR</option>
+    </select>
+  </div>
+</div>
+  <div class="form-group row">
+     <div class="col-xs-4">
+            <label><strong>Au clic, la page s'ouvre</strong></label>
+        </div>
+    <div class="col-xs-4">
+    <label class="radio-inline">
+      <input type="radio" (click)="checkPageC()" [checked]="pageCourante">dans la page courante
+    </label></div>
+     <div class="col-xs-4">
+    <label class="radio-inline">
+      <input type="radio" (click)="checkPageN()" [checked]="pageNew" >dans un nouvel onglet
+    </label>
+     </div>
+  </div>
+</div>
+<div *ngIf="file">
+<div class="form-group row">
+        <div class="col-xs-4">
+            <label><strong>Document à télécharger</strong></label>
+        </div>
+  <div class="col-xs-8">
+    <div class="row">
+      <div class="col-xs-6">
+          <input type="text" class="form-control" [(ngModel)]="fileFinal">
+      </div>
+      <div class="col-xs-1">
+        <button class="btn btn-default" (click)="openfile(fileinput)">Choisissez un fichier</button>
+         <input #fileinput type="file" class="form-control" (change)="fileChoisi($event)" style="display:none">
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+    </modal-body>
+    <modal-footer>
+       <button type="button" class="btn btn-default" data-dismiss="modal" (click)="annuler();close();">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="save();close();">Enregistrer</button>
+    </modal-footer>
+</modal>

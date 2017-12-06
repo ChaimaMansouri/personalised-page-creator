@@ -1,0 +1,547 @@
+import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
+import { ClickOutsideModule } from 'ng-click-outside'; 
+import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal'; 
+import { Http, Response } from '@angular/http';
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/map";
+declare var noUiSlider :any;
+
+
+@Component({
+  selector: 'app-container',
+  templateUrl: './container.component.html',
+  styleUrls: ['./container.component.css']
+})
+export class ContainerComponent implements OnInit {
+  @ViewChild('modal')
+    modal: ModalComponent;
+     @ViewChild('Mymodal')
+    mymodal: ModalComponent;
+    pageCourante=true;
+    pageNew=false;
+     other=true;
+    own=false;
+      psite="Choisissez";
+      ref:string="Page web d'un autre site";
+  site;
+  fbId:number=0;
+  imgId:number=0;
+  videoId:number=0;  
+  ligneId:number=0;
+  boutonId:number=0;
+  galId:number=0;
+  id:number=0;
+  backImage:string="/assets/apps/img/carreau.png";
+  textareaId:number;
+  imageId:number;
+  vId:number;
+  lid:number;
+  bid:number;
+  gid:number;
+  collapseRaduis:string="collapse";
+  collapseCadre:string="collapse";
+  collapseFond:string="collapse";
+  collapseMint:string="collapse";
+  collapseMext:string="collapse";
+  collapseColor="collapse";
+  collapseEpai="collapse";
+  collapseZoom="collapse";
+  boxClick:boolean=false;
+  imgClick:boolean=false;
+  vClick:boolean=false;
+  bClick:boolean=false;
+  lineClick:boolean=false;
+  txtClick:boolean=false;
+  galClick:boolean=false;
+  dataTab: Array<any> = [];
+  imageTab:Array<any>=[];
+  galerieTab:Array<any>=[];
+  videoTab:Array<any>=[];
+  facebookTab:Array<any>=[];
+  ligneTab:Array<any>=[];
+  boutonTab:Array<any>=[];
+  ckid:string;
+  openModal=false;
+data:Array<any>;
+idData:any;
+idSupp:any;
+dataSupp:Array<any>;
+   DropSuccess($event: any) {
+     if($event.dragData===1)
+    {
+     this.textareaId=this.id;
+     this.ckid="editor"+this.id;
+      this.dataTab.push({id:this.id,x:$event.mouseEvent.layerX,y:$event.mouseEvent.layerY,
+        borderwidth:0,bordercolor:"black",fondcolor:"white",
+        raduis:0,ptop:0,pbottom:0,pleft:0,pright:0,mtop:0,mbottom:0,mleft:0,mright:0,ckid:this.ckid,drag:1});
+         this.textareaId=this.id;
+    if(this.textareaId===this.id){
+      this.id++;
+    }
+      this.boxClick=true;
+      this.imgClick=false;
+      this.vClick=false;
+      this.lineClick=false;
+      this.bClick=false;
+      this.galClick=false;
+        this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+    }
+    else if($event.dragData===2){
+     this.imageTab.push({id:this.imgId,x:$event.mouseEvent.layerX,y:$event.mouseEvent.layerY,drag:2,
+      fondcolor:"white",mtop:0,mbottom:0,mleft:0,mright:0,borderwidth:0,bordercolor:"black",raduis:0,
+    height:100,width:100});
+    this.imageId=this.imgId;
+    if(this.imageId===this.imgId){
+      this.imgId++;
+    }
+     this.imgClick=true;
+     this.boxClick=false;
+      this.vClick=false;
+      this.lineClick=false;
+      this.bClick=false;
+      this.galClick=false;
+        this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+    }
+    else if($event.dragData===3){
+     this.galerieTab.push({id:this.galId,x:$event.mouseEvent.layerX,y:$event.mouseEvent.layerY,drag:3,
+      fondcolor:"black",mtop:0,mbottom:0,mleft:0,mright:0,borderwidth:0,bordercolor:"black",raduis:0});
+      this.gid=this.galId;
+      if(this.gid===this.galId){
+        this.galId++;
+      }
+     this.galClick=true;
+     this.boxClick=false;
+      this.vClick=false;
+      this.lineClick=false;
+      this.bClick=false;
+     this.imgClick=false;
+        this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+    }
+     else if($event.dragData===5){
+       this.ligneTab.push({id:this.ligneId,x:$event.mouseEvent.layerX,y:$event.mouseEvent.layerY,drag:5,
+      epai:1,color:"black",mtop:0,mbottom:0,mleft:0,mright:0});
+      this.lid=this.ligneId;
+      if(this.lid===this.ligneId){
+        this.ligneId++;
+      }
+      this.lineClick=true;
+      this.boxClick=false;
+      this.imgClick=false;
+      this.vClick=false;
+      this.bClick=false;
+      this.galClick=false;
+        this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+      }
+     else if($event.dragData===4){
+     this.boutonTab.push({id:this.boutonId,x:$event.mouseEvent.layerX,y:$event.mouseEvent.layerY,drag:4,color:"",
+    mtop:0,mbottom:0,mleft:0,mright:0});
+    this.bid=this.boutonId;
+    if(this.bid===this.boutonId){
+      this.boutonId++;
+    }
+     this.bClick=true;
+     this.boxClick=false;
+      this.imgClick=false;
+      this.vClick=false;
+      this.lineClick=false;
+      this.galClick=false;
+        this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+    }
+     else if($event.dragData===6){
+     this.videoTab.push({id:this.videoId,x:$event.mouseEvent.layerX,y:$event.mouseEvent.layerY,drag:6,mtop:0,mbottom:0,mleft:0,mright:0});
+     this.vId=this.videoId;
+     if(this.vId===this.videoId){
+       this.videoId++;
+     }
+     this.vClick=true;
+     this.boxClick=false;
+      this.imgClick=false;
+      this.lineClick=false;
+      this.bClick=false;
+      this.galClick=false;
+        this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+    }
+    else{
+      $event.dragData.x=$event.mouseEvent.layerX;
+     $event.dragData.y=$event.mouseEvent.layerY;
+       this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseEpai="collapse";
+  this.collapseColor="collapse";
+   this.collapseZoom="collapse";
+    }
+  }
+  savePage(){
+     if(this.dataTab.length>0){
+      
+     }
+  if(this.imageTab.length>0){
+    this.http.post('/imageSave',this.imageTab).map((res:Response) =>JSON.parse(JSON.stringify(res))).subscribe(
+                 (success) =>console.log(success._body),
+                (error) => console.log(error));
+  }
+  if(this.galerieTab.length>0){
+
+  }
+  if(this.videoTab.length>0){
+
+  }
+   if(this.ligneTab.length>0){
+
+   }
+  if(this.boutonTab.length>0){
+
+  }
+  }
+  dropClick($event){
+    if($event.srcElement.id==="dropp"){
+ this.boxClick=false;
+  this.imgClick=false;
+  this.vClick=false;
+  this.lineClick=false;
+  this.bClick=false;
+  this.galClick=false;
+    this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+    }
+  }
+  clicktxt(test:boolean,id:any){
+  this.boxClick=test;
+    this.textareaId=id;
+     this.imgClick=false;
+  this.vClick=false;
+  this.lineClick=false;
+  this.bClick=false;
+  this.galClick=false;
+  this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+  }
+  clickimg(test:boolean,id:any){
+  this.imgClick=test;
+  this.imageId=id;
+  this.boxClick=false;
+  this.vClick=false;
+  this.lineClick=false;
+  this.bClick=false;
+  this.galClick=false;
+    this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+  }
+  clickv(test:boolean,id:any){
+  this.vClick=test;
+  this.vId=id;
+  this.boxClick=false;
+  this.imgClick=false;
+  this.lineClick=false;
+  this.bClick=false;
+  this.galClick=false;
+    this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+  }
+  clickline(test:boolean,id:any){
+  this.lineClick=test;
+  this.lid=id;
+  this.boxClick=false;
+  this.imgClick=false;
+  this.vClick=false;
+  this.galClick=false;
+  this.bClick=false;
+    this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+  }
+  clickb(test:boolean,id:any){
+  this.bClick=test;
+  this.bid=id;
+  this.boxClick=false;
+  this.imgClick=false;
+  this.vClick=false;
+  this.lineClick=false;
+  this.galClick=false;
+    this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+  this.collapseZoom="collapse";
+  }
+ clickg(test:boolean,id:any){
+  this.galClick=test;
+  this.gid=id;
+   this.bClick=false;
+  this.boxClick=false;
+  this.imgClick=false;
+  this.vClick=false;
+  this.lineClick=false;
+    this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+  this.collapseZoom="collapse";
+  }
+afficherZoom(data:any,id:any){
+this.collapseZoom="collapse in";
+ this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseMint="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+    this.data=data;
+      this.idData=id;
+}
+afficherEpaisseur(data:any,id:any){
+   this.collapseCadre="collapse";
+      this.collapseFond="collapse";
+      this.collapseRaduis="collapse";
+      this.collapseMint="collapse";
+      this.collapseMext="collapse";
+      this.collapseColor="collapse";
+      this.collapseEpai="collapse in";
+      this.data=data;
+      this.idData=id;
+       this.collapseZoom="collapse";
+}
+afficherColor(data:any,id:any){
+  this.collapseCadre="collapse";
+      this.collapseFond="collapse";
+      this.collapseRaduis="collapse";
+      this.collapseMint="collapse";
+      this.collapseMext="collapse";
+      this.collapseColor="collapse in";
+      this.collapseEpai="collapse";
+      this.data=data;
+      this.idData=id;
+       this.collapseZoom="collapse";
+}
+
+      afficheBorder(data:any,id:any){
+      this.collapseCadre="collapse in";
+      this.collapseFond="collapse";
+      this.collapseRaduis="collapse";
+      this.collapseMint="collapse";
+      this.collapseMext="collapse";
+      this.collapseColor="collapse";
+      this.collapseEpai="collapse";
+      this.data=data;
+      this.idData=id;
+       this.collapseZoom="collapse";
+ }
+afficherRaduis(data:any,id:any){
+  this.collapseRaduis="collapse in";
+  this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+this.collapseMint="collapse";
+this.collapseMext="collapse";
+this.collapseColor="collapse";
+this.collapseEpai="collapse";
+ this.collapseZoom="collapse";
+this.data=data;
+  this.idData=id;
+}
+afficherMargeInt(data:any,id:any){
+  this.collapseMint="collapse in";
+  this.collapseRaduis="collapse";
+  this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseMext="collapse";
+  this.collapseColor="collapse";
+   this.collapseZoom="collapse";
+  this.collapseEpai="collapse";
+ this.data=data;
+  this.idData=id;
+}
+
+myOnChange(event:any,val:any){
+  this.idData[val]=event.from;
+}
+
+myOnChangeZoom(event:any){
+  this.idData.width=event.from;
+  this.idData.height=event.from;
+}
+
+afficherMargeExt(data:any,id:any){
+this.collapseMext="collapse in";
+this.collapseMint="collapse";
+  this.collapseRaduis="collapse";
+  this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+ this.data=data;
+this.idData=id;
+}
+
+    afficherFond(data:any,id:any){
+      this.collapseCadre="collapse";
+      this.collapseFond="collapse in";
+      this.collapseRaduis="collapse";
+      this.collapseMint="collapse";
+      this.collapseMext="collapse";
+      this.collapseColor="collapse";
+      this.collapseEpai="collapse";
+       this.collapseZoom="collapse";
+      this.data=data;
+      this.idData=id;
+    }
+    color(event,val:any){
+    this.idData[val]=event;
+  }
+    background_remove(){
+      if(this.backImage==="/assets/apps/img/carreau.png")
+        {this.backImage=""}
+      else{
+        this.backImage="/assets/apps/img/carreau.png";
+      }
+    }
+    open(data:any,id:any){
+       
+        this.openModal=true;
+        this.dataSupp=data;
+        this.idSupp=id;
+        this.collapseMext="collapse";
+        this.collapseMint="collapse";
+         this.collapseRaduis="collapse";
+  this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+   this.modal.open();
+      }
+  openC(data:any,id:any){
+        this.openModal=true;
+        this.data=data;
+        this.idData=id;
+        this.collapseMext="collapse";
+        this.collapseMint="collapse";
+         this.collapseRaduis="collapse";
+  this.collapseCadre="collapse";
+  this.collapseFond="collapse";
+  this.collapseColor="collapse";
+  this.collapseEpai="collapse";
+   this.collapseZoom="collapse";
+   this.mymodal.open();
+      }
+close(){
+  this.openModal=false;
+  this.modal.close();
+}
+closeC(){
+  this.mymodal.close();
+}
+save(){
+  if(this.openModal){
+    this.boxClick=false;
+    var index=this.dataSupp.indexOf(this.idSupp);
+    this.dataSupp.splice(index,1);
+    this.openModal=false;
+  }
+}
+checkPageC(){
+this.pageCourante=true;
+this.pageNew=false;
+}
+checkPageN(){
+this.pageCourante=false;
+this.pageNew=true;
+}
+selectChange(){
+  if(this.ref==="Page web d'un autre site"){
+    this.other=true;
+    this.own=false;
+  }
+  else if(this.ref==="Page web du site"){
+    this.other=false;
+    this.own=true;
+  }
+}
+
+  constructor(private el: ElementRef,private http:Http) { }
+
+  ngOnInit() {
+  }
+
+}

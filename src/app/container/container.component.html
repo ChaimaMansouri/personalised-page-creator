@@ -1,0 +1,418 @@
+<div [ngStyle]="{'background-image': 'url(' + backImage + ')' }"
+  dnd-droppable (onDropSuccess)="DropSuccess($event)" (click)="dropClick($event)"
+  class="panel panel-default col-md-8 col-lg-8 col-xs-12 col-sm-12" id="dropp">
+   <div *ngFor="let d of dataTab"> 
+    <app-textbox [dataObject]="d" [ckid]="d.ckid" (textClicked)="clicktxt($event,d.id)"></app-textbox>
+  </div> 
+  <div *ngFor="let img of imageTab"> 
+    <app-image [imageObject]="img" (imgClicked)="clickimg($event,img.id)"></app-image>
+  </div> 
+  <div *ngFor="let v of videoTab"> 
+    <app-video [videoObject]="v" (vClicked)="clickv($event,v.id)"></app-video>
+  </div> 
+  <div *ngFor="let l of ligneTab"> 
+    <app-ligne [ligneObject]="l" (lineClicked)="clickline($event,l.id)"></app-ligne>
+  </div> 
+  <div *ngFor="let b of boutonTab"> 
+    <app-bouton [boutonObject]="b" (bClicked)="clickb($event,b.id)"></app-bouton>
+  </div> 
+   <div *ngFor="let g of galerieTab"> 
+    <app-galerie [galerieObject]="g" (galClicked)="clickg($event,g.id)"></app-galerie>
+  </div> 
+  <!-- <div *ngFor="let fb of facebookData; let j=index"> 
+  <app-facebook [dataObject]="fb"></app-facebook>
+  </div> -->
+
+</div>
+
+
+<div class="page-sidebar-wrapper">
+  <div class="page-sidebar navbar-collapse collapse">
+    <ul class="page-sidebar-menu">
+      <div class="row">
+        <div class="col-md-6">  
+          <div class="fa-item" style="float:right" (click)="savePage()">
+            <i class="fa fa-save"></i> Sauver
+          </div>
+        </div>
+        <div class="col-md-6">  
+          <div class="fa-item" (click)="background_remove()">
+            <i class="fa fa-slack"></i>Grille
+          </div>
+        </div>
+      </div>
+      <hr>
+        <div class="collapse in" *ngIf="boxClick">
+          <div style="text-align:center;">
+          <h4><strong>Bloc sélectionné</strong></h4>
+          </div>
+        <div class="row">
+          <div class="fa-item col-md-5 col-sm-3" (click)="open(this.dataTab,this.dataTab[this.textareaId])">
+          <i class="fa fa-remove"></i>Suppr.
+          </div>
+        <div class="fa-item col-md-5 col-sm-3" (click)="afficherFond(this.dataTab,this.dataTab[this.textareaId])">
+           <i class="fa fa-square"></i> Fond
+          </div>
+        </div>
+        <div class="row">
+          <div class="fa-item col-md-5 col-sm-3" (click)="afficheBorder(this.dataTab,this.dataTab[this.textareaId])">
+          <i class="fa fa-square-o"></i> Cadre
+          </div>
+        <div class="fa-item col-md-6 col-sm-3" (click)="afficherMargeInt(this.dataTab,this.dataTab[this.textareaId])">
+           <i class="fa fa-i-cursor"></i>Marge int
+          </div>
+        </div>
+       <div class="row">
+          <div class="fa-item col-md-5 col-sm-3" (click)="afficherRaduis(this.dataTab,this.dataTab[this.textareaId])">  
+           <i class="fa fa-square-o"></i> Arrondir
+          </div>
+          <div class="fa-item col-md-6 col-sm-3"  (click)="afficherMargeExt(this.dataTab,this.dataTab[this.textareaId])">
+          <i class="fa fa-i-cursor"></i>Marge ext
+          </div>
+        </div>
+          <hr>
+        </div>
+        <div class="collapse in"  *ngIf="imgClick">
+          <div style="text-align:center;">
+          <h4><strong>Bloc sélectionné</strong></h4>
+          </div>
+        <div class="row">
+          <div class="fa-item col-md-5 col-sm-3" (click)="open(this.imageTab,this.imageTab[this.imageId])">
+          <i class="fa fa-remove"></i>Suppr.
+          </div>
+        <div class="fa-item col-md-5 col-sm-3"  (click)="afficherFond(this.imageTab,this.imageTab[this.imageId])">
+           <i class="fa fa-square"></i> Fond
+          </div>
+        </div>
+        <div class="row">
+          <div class="fa-item col-md-5 col-sm-3" (click)="afficheBorder(this.imageTab,this.imageTab[this.imageId])">
+          <i class="fa fa-square-o"></i> Cadre
+          </div>
+        <div class="fa-item col-md-5 col-sm-3" (click)="afficherRaduis(this.imageTab,this.imageTab[this.imageId])">
+           <i class="fa fa-square-o"></i> Arrondir
+          </div>
+        </div>
+        <div class="row">
+          <div class="fa-item col-md-5 col-sm-3"  (click)="afficherZoom(this.imageTab,this.imageTab[this.imageId])">
+           <i class="fa fa-search"></i> Zoom</div>
+        <div class="fa-item col-md-5 col-sm-3" (click)="openC(this.imageTab,this.imageTab[this.imageId])">
+    <i class="fa fa-paperclip"></i> Lien</div>
+        </div>
+       <div class="row">
+          <div class="fa-item col-md-6 col-sm-3" (click)="afficherMargeExt(this.imageTab,this.imageTab[this.imageId])">
+          <i class="fa fa-i-cursor"></i>Marge ext
+          </div>
+        </div>
+        <hr>
+        </div>
+       <div class="collapse in" *ngIf="galClick">
+          <div style="text-align:center;">
+          <h4><strong>Bloc sélectionné</strong></h4>
+          </div>
+        <div class="row">
+          <div class="fa-item col-md-5 col-sm-3" (click)="open(this.galerieTab,this.galerieTab[this.gid])">
+          <i class="fa fa-remove"></i>Suppr.
+          </div>
+           <div class="fa-item col-md-5 col-sm-3" (click)="afficheBorder(this.galerieTab,this.galerieTab[this.gid])">
+          <i class="fa fa-square-o"></i> Cadre
+          </div>
+        </div>
+        <div class="row">
+         <div class="fa-item col-md-5 col-sm-3" (click)="afficherRaduis(this.galerieTab,this.galerieTab[this.gid])">  
+           <i class="fa fa-square-o"></i> Arrondir
+          </div>
+         <div class="fa-item col-md-5 col-sm-3" (click)="afficherFond(this.galerieTab,this.galerieTab[this.gid])">
+           <i class="fa fa-square"></i> Couleur
+          </div>
+        </div>
+       <div class="row">
+          <div class="fa-item col-md-6 col-sm-3"  (click)="afficherMargeExt(this.galerieTab,this.galerieTab[this.gid])">
+          <i class="fa fa-i-cursor"></i>Marge ext
+          </div>
+        </div>
+          <hr>
+        </div>
+         <div class="collapse in"  *ngIf="bClick">
+          <div style="text-align:center;">
+          <h4><strong>Bloc sélectionné</strong></h4>
+          </div>
+        <div class="row">
+          <div class="fa-item col-md-5 col-sm-3" (click)="open(this.boutonTab,this.boutonTab[this.bid])">
+          <i class="fa fa-remove"></i>Suppr.
+          </div>
+        <div class="fa-item col-md-5 col-sm-3" (click)="afficherColor(this.boutonTab,this.boutonTab[this.bid])">
+           <i class="fa fa-paint-brush"></i> Couleur
+          </div>
+        </div>
+       <div class="row">
+          <div class="fa-item col-md-6 col-sm-3" (click)="afficherMargeExt(this.boutonTab,this.boutonTab[this.bid])">
+          <i class="fa fa-i-cursor"></i>Marge ext
+          </div>
+        </div>
+          <hr>
+        </div>
+         <div class="collapse in" *ngIf="lineClick">
+          <div style="text-align:center;">
+          <h4><strong>Bloc sélectionné</strong></h4>
+          </div>
+        <div class="row">
+          <div class="fa-item col-md-5 col-sm-3" (click)="open(this.ligneTab,this.ligneTab[this.lid])">
+          <i class="fa fa-remove"></i>Suppr.
+          </div>
+        <div class="fa-item col-md-6 col-sm-3" (click)="afficherEpaisseur(this.ligneTab,this.ligneTab[this.lid])">
+              <i class="fa fa-bars"></i>Epaisseur
+          </div>
+        </div>
+       <div class="row">
+         <div class="fa-item col-md-5 col-sm-3" (click)="afficherColor(this.ligneTab,this.ligneTab[this.lid])">
+          <i class="fa fa-paint-brush"></i> Couleur
+          </div>
+          <div class="fa-item col-md-6 col-sm-3" (click)="afficherMargeExt(this.ligneTab,this.ligneTab[this.lid])">
+          <i class="fa fa-i-cursor"></i>Marge ext
+          </div>
+        </div>
+          <hr>
+        </div>
+         <div class="collapse in" *ngIf="vClick">
+          <div style="text-align:center;">
+          <h4><strong>Bloc sélectionné</strong></h4>
+          </div>
+        <div class="row">
+          <div class="fa-item col-md-5 col-sm-3" (click)="open(this.videoTab,this.videoTab[this.vId])">
+          <i class="fa fa-remove"></i>Suppr.
+          </div>
+          <div class="fa-item col-md-6 col-sm-3" (click)="afficherMargeExt(this.videoTab,this.videoTab[this.vId])">
+          <i class="fa fa-i-cursor"></i>Marge ext
+          </div>
+        </div>
+          <hr>
+        </div>
+        <div [class]="collapseCadre">
+            <div class="row"><div class="col-md-1"></div>
+            <div class="col-md-9">
+          <ion-range-slider #sliderElement
+          min="0"
+          max="20"
+          (onChange)="myOnChange($event,'borderwidth')"></ion-range-slider></div>
+          </div>
+            <app-color (dataColor)="color($event,'bordercolor')"></app-color>
+            <hr>
+        </div>
+          <div [class]="collapseFond">
+            <app-color (dataColor)="color($event,'fondcolor')"></app-color>
+            <hr>
+        </div>
+          <div [class]="collapseColor">
+            <app-color (dataColor)="color($event,'color')"></app-color>
+            <hr>
+        </div>
+          <div [class]="collapseRaduis">
+            <div class="row"><div class="col-md-1"></div>
+            <div class="col-md-9">
+          <ion-range-slider #sliderElement
+          min="0"
+          max="30"
+          (onChange)="myOnChange($event,'raduis')"></ion-range-slider></div>
+          </div>
+        <hr>
+        </div>
+       <div [class]="collapseZoom">
+            <div class="row"><div class="col-md-1"></div>
+            <div class="col-md-9">
+          <ion-range-slider #sliderElement
+          min="50"
+          from="100"
+          max="200"
+          (onChange)="myOnChangeZoom($event)"></ion-range-slider></div>
+          </div>
+        <hr>
+        </div>
+       <div [class]="collapseEpai">
+            <div class="row"><div class="col-md-1"></div>
+            <div class="col-md-9">
+          <ion-range-slider #sliderElement
+          min="1"
+          max="20"
+          (onChange)="myOnChange($event,'epai')"></ion-range-slider></div>
+          </div>
+        <hr>
+        </div>
+         <div [class]="collapseMint">
+         <div class="row"><div class="col-md-3">
+          <strong>Haut</strong></div>
+           <div class="col-md-9">
+            <ion-range-slider #sliderElement
+          min="0"
+          max="25"
+          (onChange)="myOnChange($event,'ptop')"></ion-range-slider></div></div>
+        <div class="row"><div class="col-md-3">
+          <strong>Droit</strong></div>
+           <div class="col-md-9">
+            <ion-range-slider #sliderElement
+          min="0"
+          max="25"
+          (onChange)="myOnChange($event,'pright')"></ion-range-slider></div></div>
+          <div class="row"><div class="col-md-3">
+          <strong>Bas</strong></div>
+           <div class="col-md-9">
+            <ion-range-slider #sliderElement
+          min="0"
+          max="25"
+          (onChange)="myOnChange($event,'pbottom')"></ion-range-slider></div></div>
+          <div class="row"><div class="col-md-3">
+          <strong>Gauche</strong></div>
+           <div class="col-md-9">
+            <ion-range-slider #sliderElement
+          min="0"
+          max="25"
+          (onChange)="myOnChange($event,'pleft')"></ion-range-slider></div></div>
+          <hr>
+        </div>
+         <div [class]="collapseMext">
+         <div class="row"><div class="col-md-3">
+          <strong>Haut</strong></div>
+           <div class="col-md-9">
+            <ion-range-slider #sliderElement
+          min="0"
+          max="25"
+          (onChange)="myOnChange($event,'mtop')"></ion-range-slider></div></div>
+        <div class="row"><div class="col-md-3">
+          <strong>Droit</strong></div>
+           <div class="col-md-9">
+            <ion-range-slider #sliderElement
+          min="0"
+          max="25"
+          (onChange)="myOnChange($event,'mright')"></ion-range-slider></div></div>
+          <div class="row"><div class="col-md-3">
+          <strong>Bas</strong></div>
+           <div class="col-md-9">
+            <ion-range-slider #sliderElement
+          min="0"
+          max="25"
+          (onChange)="myOnChange($event,'mbottom')"></ion-range-slider></div></div>
+          <div class="row"><div class="col-md-3">
+          <strong>Gauche</strong></div>
+           <div class="col-md-9">
+            <ion-range-slider #sliderElement
+          min="0"
+          max="25"
+          (onChange)="myOnChange($event,'mleft')"></ion-range-slider></div></div>
+          <hr>
+        </div>
+      <li class="nav-item start active open">
+        <a href="javascript:;" class="nav-link nav-toggle">
+          <i class="icon-puzzle"></i>
+          <span class="title">Ajouter un bloc</span>
+          <span class="selected"></span>
+        </a>
+      </li>
+    </ul>
+    <div class="sub-menu">
+      <div class="row">
+           <div class="col-md-6">  
+              <div dnd-draggable [dragEnabled]="true" [dragData]="1" style="float:right">
+                <img class="size_img" src="assets/apps/img/Textbox.png">  
+              </div>
+           </div>
+               <div class="col-md-6">  
+              <div dnd-draggable [dragEnabled]="true" [dragData]="2">
+                <img class="size_img" src="assets/apps/img/full_image.png"> 
+              </div>
+               </div>
+       </div>
+      <div class="row">
+           <div class="col-md-6">  
+              <div dnd-draggable [dragEnabled]="true" [dragData]="3" style="float:right">
+                <img class="size_img" src="assets/apps/img/galerie.jpg"> 
+              </div>
+           </div>
+               <div class="col-md-6">  
+              <div dnd-draggable [dragEnabled]="true" [dragData]="4">
+                  <img class="size_img" src="assets/apps/img/boutton.jpg">  
+              </div>
+               </div>
+       </div>
+               <div class="row">
+           <div class="col-md-6">  
+              <div dnd-draggable [dragEnabled]="true" [dragData]="5" style="float:right">
+                <img class="size_img" src="assets/apps/img/ligne.png">  
+              </div>
+           </div>
+               <div class="col-md-6">  
+              <div dnd-draggable [dragEnabled]="true" [dragData]="6">
+                <img class="size_img" src="assets/apps/img/YouTube_Play_Button.jpg"> 
+              </div>
+               </div>
+       </div>
+              
+    </div>
+  </div>
+</div>
+<modal #modal>
+   
+    <modal-body>
+    <strong> Etes-vous sûr de vouloir supprimer le(s) élément(s) sélectionné(s) ?</strong>
+    </modal-body>
+    <modal-footer>
+       <button type="button" class="btn btn-default" data-dismiss="modal" (click)="close()">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="save();close()">Enregistrer</button>
+    </modal-footer>
+</modal>
+  <modal #Mymodal>
+   
+    <modal-body>
+<div class="form-group row">
+        <div class="col-xs-4">
+            <label><strong>Lien vers </strong></label>
+        </div>
+  <div class="col-xs-8">
+     <select class="form-control" (change)="selectChange()" [(ngModel)]="ref">
+        <option>Page web d'un autre site</option>
+        <option>Page web du site</option>
+    </select>
+  </div>
+</div>
+<div *ngIf="other">
+ <div class="form-group row">
+        <div class="col-xs-4">
+            <label><strong>URL du site</strong></label>
+        </div>
+  <div class="col-xs-8">
+    <input class="form-control" type="text" placeholder="URL du site" [(ngModel)]="site">
+  </div>
+</div>
+</div>
+<div *ngIf="own">
+ <div class="form-group row">
+        <div class="col-xs-4">
+            <label><strong>Page du site</strong></label>
+        </div>
+  <div class="col-xs-8">
+   <select class="form-control" [(ngModel)]="psite">
+        <option>Choisissez</option>
+        <option>Offres</option>
+        <option>Actualités et CR</option>
+    </select>
+  </div>
+</div>
+  </div>
+  <div class="form-group row">
+     <div class="col-xs-4">
+            <label><strong>Au clic,la page s'ouvre</strong></label>
+        </div>
+    <div class="col-xs-4">
+    <label class="radio-inline">
+      <input type="radio" (click)="checkPageC()" [checked]="pageCourante">la page courante
+    </label></div>
+     <div class="col-xs-4">
+    <label class="radio-inline">
+      <input type="radio" (click)="checkPageN()" [checked]="pageNew">un nouvel onglet
+    </label>
+     </div>
+  </div>
+    </modal-body>
+    <modal-footer>
+       <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeC();">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="closeC();">Enregistrer</button>
+    </modal-footer>
+</modal>

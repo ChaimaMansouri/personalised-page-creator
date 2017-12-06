@@ -1,0 +1,21 @@
+.galerieClass{
+    border: 1px solid paleturquoise;
+}
+@keyframes example {
+from  {left:0px; top:0px;}
+to { left:100%; top:0px;}
+}
+@-webkit-keyframes example {
+ from  {left:0px; top:0px;}
+to { left:100%; top:0px;}
+}
+
+.anim{
+    -webkit-animation: example 1s infinite; /* Safari 4.0 - 8.0 */
+    -webkit-animation-timing-function: linear;
+    animation: example 1s infinite;
+    animation-timing-function: linear;
+    -moz-animation: example 1s infinite;
+    -moz-animation-timing-function: linear;
+
+ }

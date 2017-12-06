@@ -1,0 +1,86 @@
+@import "~nouislider/distribute/nouislider.min.css";
+.cc{
+    display: none;
+}
+
+
+.sizeleft{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    z-index: 10;
+    border: 1px solid black;
+}
+.sizeright{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+   right: 0px;
+    z-index: 10;
+    border: 1px solid black;
+}
+.sizetop{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    z-index: 10;
+    border: 1px solid black;
+}
+.sizebottom{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    z-index: 10;
+    border: 1px solid black;
+}
+.sizeleftcorner{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    border: 1px solid black;
+}
+.sizetopcorner{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 10;
+    border: 1px solid black;
+}
+.sizerightcorner{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    bottom: 0px;
+    right:0px;
+    z-index: 10;
+    border: 1px solid black;
+}
+.sizebottomcorner{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    z-index: 10;
+    border: 1px solid black;
+}

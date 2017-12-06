@@ -1,0 +1,12 @@
+.ligneClass{
+    border: 1px solid paleturquoise;
+    background-color:white;
+}
+.vh{
+width:95px;
+height: 95px;
+
+}
+.click{
+border: 5px solid paleturquoise;
+}

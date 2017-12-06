@@ -1,0 +1,42 @@
+<div  mwlResizable
+      [enableGhostResize]="true"
+      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+      (resizeEnd)="onResizeEnd($event)" 
+ class="videoClass" 
+[ngStyle]="{
+    'top.px':(this.videoObject.y)-((this.videoObject.y)%60),
+    'left.px':(this.videoObject.x-(this.videoObject.x%90)),
+    'width.px':width-(this.videoObject.mleft+this.videoObject.mright),
+'height.px':height-(this.videoObject.mtop+this.videoObject.mbottom),
+    'position':'absolute',
+'margin-top.px':this.videoObject.mtop,
+'margin-right.px':this.videoObject.mright,
+'margin-bottom.px':this.videoObject.mbottom,
+'margin-left.px':this.videoObject.mleft}"
+    (click)="clicked($event)" (dblclick)="open()" (clickOutside)="onClickedOutside($event)">
+
+   <div class="sizeleft {{sizeDiv}}"></div>
+   <div class="sizeleftcorner {{sizeDiv}}"></div>
+   <div class="sizetopcorner {{sizeDiv}}" ></div>
+   <div class="sizebottomcorner {{sizeDiv}}"></div>
+   <div class="sizerightcorner {{sizeDiv}}"></div>
+   <div class="sizeright {{sizeDiv}}"></div>
+   <div class="sizetop {{sizeDiv}}"></div>
+   <div class="sizebottom {{sizeDiv}}"></div>
+<p *ngIf="!video.url"><strong>Double-cliquez </strong> pour configurer le module Youtube.</p>
+<div class="thumbnail"></div>
+ <iframe style="width:100%;height:100%;position:absolute;top:0px;left:0px" 
+*ngIf="video.url" [src]="video.url | safe" disabled="true"></iframe> 
+</div>
+<modal #modal>
+    <modal-header>
+        <h4 class="modal-title">Url de la vidéo sur Youtube</h4>
+    </modal-header>
+    <modal-body>
+      <input class="form-control" type="text" placeholder="https://www.youtube.com/watch?v=" [(ngModel)]="str">
+    </modal-body>
+    <modal-footer>
+       <button type="button" class="btn btn-default" data-dismiss="modal" (click)="close()">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="save();close()">Enregistrer</button>
+    </modal-footer>
+</modal>

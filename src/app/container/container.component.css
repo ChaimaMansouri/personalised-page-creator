@@ -1,0 +1,35 @@
+.panel{
+    min-width: 1081px;
+    min-height: 1201px;
+    float:right;
+    padding: 0px;
+    margin: 0px!important;
+}
+
+.size_img{
+    width: 70px;
+    height:70px;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #E1E5EC;
+    filter:grayscale(100%);
+}
+ .size_img:hover{
+     filter:none;
+     border: 1px solid #3598DC;
+ }
+    .irs-min{
+        visibility: hidden !important;
+    }
+    .irs-max{
+        visibility: hidden !important;
+    }
+    .irs-single{
+          visibility: hidden !important;
+    }
+    .irs-to{
+          visibility: hidden !important;
+    }
+    .irs-from{
+          visibility: hidden !important;
+    }

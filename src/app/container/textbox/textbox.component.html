@@ -1,0 +1,37 @@
+ <div mwlResizable
+      [enableGhostResize]="enablerezise"
+      [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+      (resizeEnd)="onResizeEnd($event)"
+ (click)="changeClass()" (dblclick)="func2()"  [ngStyle]="{
+'top.px':dataObject.y-(dataObject.y%60),
+'left.px':dataObject.x-(dataObject.x%90),
+'position': 'absolute',
+'width.px':width-(dataObject.mleft+dataObject.mright),
+'height.px':height-(dataObject.mtop+dataObject.mbottom),
+'background-color':dataObject.fondcolor,
+ 'border-style': 'solid',
+ 'border-width.px':dataObject.borderwidth,
+ 'border-color': dataObject.bordercolor,
+ 'border-radius.px':dataObject.raduis,
+ 'padding-top.px':dataObject.ptop,
+ 'padding-right.px':dataObject.pright,
+ 'padding-bottom.px':dataObject.pbottom,
+ 'padding-left.px':dataObject.pleft,
+ 'margin-top.px':dataObject.mtop,
+'margin-right.px':dataObject.mright,
+'margin-bottom.px':dataObject.mbottom,
+'margin-left.px':dataObject.mleft,
+'overflow':'hidden'}" class="textbox" (clickOutside)="onClickedOutside($event)"
+ [id]="ckid" contenteditable="true">
+{{text}}
+
+  <div class="sizeleft {{sizeDiv}}"></div>
+   <div class="sizeleftcorner {{sizeDiv}}"></div>
+   <div class="sizetopcorner {{sizeDiv}}" ></div>
+   <div class="sizebottomcorner {{sizeDiv}}"></div>
+   <div class="sizerightcorner {{sizeDiv}}"></div>
+   <div class="sizeright {{sizeDiv}}"></div>
+   <div class="sizetop {{sizeDiv}}"></div>
+   <div class="sizebottom {{sizeDiv}}"></div>
+
+ </div>
